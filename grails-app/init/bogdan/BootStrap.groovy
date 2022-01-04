@@ -1,4 +1,4 @@
-package mysecurerest
+package bogdan
 
 import com.bogdan.Authority
 import com.bogdan.Message
