@@ -1,60 +1,17 @@
 package bogdan
 
 import com.bogdan.Message
-import com.bogdan.Person
-import grails.transaction.Transactional
-import org.grails.datastore.mapping.query.api.Criteria
-import org.grails.web.json.JSONObject
 
-@Transactional
-class MessageService {
+interface MessageService {
 
-    List<Message> list(def params) {
-        def userId = params.userId
-        return Message.where { user.id == userId }.list()
-    }
+    List<Message> list(def params)
 
-    Message getOne(def params) {
-        def userId = params.userId
-        def messageId = params?.id
+    Message getOne(def params)
 
-        Criteria criteria = Message.createCriteria()
-        Message result = criteria.get{
-            and {
-                eq ('user.id', Long.parseLong(userId))
-                eq ('id', Long.parseLong(messageId))
-            }
-        } as Message
+    Message save(def params, def request)
 
-        return result
-    }
+    Message update(def params, def request)
 
-    Message save(def params, def request) {
-        def userId = params.userId
-        Person person = Person.get(userId)
-        JSONObject messageJson = request.JSON
-        Message messageInstance = new Message(messageJson)
+    void delete(def params)
 
-        person.addToMessages(messageInstance)
-
-        return messageInstance
-    }
-
-    Message update(def params, def request) {
-        def messageId = params?.id
-        def messageJson = request.JSON
-        Message messageInstance = Message.get(messageId)
-
-        messageInstance.properties = messageJson
-        messageInstance.lastUpdated = new Date()
-        messageInstance = messageInstance.merge()
-
-        return messageInstance
-    }
-
-    void delete(def params) {
-        def messageId = params?.id
-        Message messageInstance = Message.get(messageId)
-        messageInstance.delete()
-    }
 }

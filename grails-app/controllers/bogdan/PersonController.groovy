@@ -1,12 +1,13 @@
 package bogdan
 
+import bogdan.impl.PersonServiceImpl
 import com.bogdan.Person
 import grails.rest.RestfulController
 import org.springframework.http.HttpStatus
 
 class PersonController extends RestfulController<Person> {
 
-    PersonService personService
+    PersonServiceImpl personService
     static responseFormats = ['json', 'xml']
 
     PersonController() {

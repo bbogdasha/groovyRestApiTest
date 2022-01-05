@@ -1,41 +1,17 @@
 package bogdan
 
 import com.bogdan.Person
-import grails.transaction.Transactional
-import org.grails.web.json.JSONObject
 
-@Transactional
-class PersonService {
+interface PersonService {
 
-    List<Person> list() {
-        return Person.findAll()
-    }
+    List<Person> list()
 
-    Person getOne(def params) {
-        return Person.findById(params?.id)
-    }
+    Person getOne(def params)
 
-    Person save(def request) {
-        JSONObject personJson = request.JSON
-        Person personInstance = new Person(personJson)
+    Person save(def request)
 
-        personInstance = personInstance.save()
+    Person update(def params, def request)
 
-        return personInstance
-    }
+    void delete(def params)
 
-    Person update(def params, def request) {
-        def personJson = request.JSON
-        Person personInstance = Person.get(params?.id)
-
-        personInstance.properties = personJson
-        personInstance = personInstance.merge()
-
-        return personInstance
-    }
-
-    void delete(def params) {
-        Person personInstance = Person.get(params?.id)
-        personInstance.delete()
-    }
 }

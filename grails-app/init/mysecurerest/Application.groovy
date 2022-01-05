@@ -1,4 +1,4 @@
-package bogdan
+package mysecurerest
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration
