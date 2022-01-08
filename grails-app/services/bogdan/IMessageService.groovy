@@ -2,7 +2,7 @@ package bogdan
 
 import com.bogdan.Message
 
-interface MessageService {
+interface IMessageService {
 
     List<Message> list(def params)
 

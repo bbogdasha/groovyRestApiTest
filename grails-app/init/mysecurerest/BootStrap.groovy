@@ -1,10 +1,10 @@
-package bogdan
+package mysecurerest
 
 import com.bogdan.Authority
 import com.bogdan.Message
 import com.bogdan.Person
-import com.bogdan.User
 import com.bogdan.UserAuthority
+import com.bogdan.UserSec
 
 class BootStrap {
 
@@ -27,8 +27,8 @@ class BootStrap {
         person2.addToMessages(message4).save()
         person2.addToMessages(message5).save()
 
-        def role1 = new Authority(authority:"ROLE_USER").save flush:true
-        def user1 = new User(username:"user1",password:"pwd1").save flush:true
+        Authority role1 = new Authority(authority: "ROLE_USER").save()
+        UserSec user1 = new UserSec(username: "user1", password: "pwd1").save()
         UserAuthority.create(user1,role1)
     }
 

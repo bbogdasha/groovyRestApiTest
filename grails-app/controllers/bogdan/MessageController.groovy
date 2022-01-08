@@ -1,13 +1,13 @@
 package bogdan
 
-import bogdan.impl.MessageServiceImpl
+import bogdan.impl.MessageService
 import com.bogdan.Message
 import grails.rest.RestfulController
 import org.springframework.http.HttpStatus
 
 class MessageController extends RestfulController<Message> {
 
-    MessageServiceImpl messageService
+    MessageService messageService
     static responseFormats = ['json', 'xml']
 
     MessageController() {

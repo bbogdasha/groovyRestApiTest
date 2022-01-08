@@ -1,5 +1,5 @@
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.bogdan.User'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.bogdan.UserSec'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.bogdan.UserAuthority'
 grails.plugin.springsecurity.authority.className = 'com.bogdan.Authority'
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"

@@ -10,7 +10,7 @@ class UserAuthority implements Serializable {
 
 	private static final long serialVersionUID = 1
 
-	User user
+	UserSec user
 	Authority authority
 
 	@Override
@@ -38,24 +38,24 @@ class UserAuthority implements Serializable {
 
 	private static DetachedCriteria criteriaFor(long userId, long authorityId) {
 		UserAuthority.where {
-			user == User.load(userId) &&
+			user == UserSec.load(userId) &&
 			authority == Authority.load(authorityId)
 		}
 	}
 
-	static UserAuthority create(User user, Authority authority) {
+	static UserAuthority create(UserSec user, Authority authority) {
 		def instance = new UserAuthority(user: user, authority: authority)
 		instance.save()
 		instance
 	}
 
-	static boolean remove(User u, Authority r) {
+	static boolean remove(UserSec u, Authority r) {
 		if (u != null && r != null) {
 			UserAuthority.where { user == u && authority == r }.deleteAll()
 		}
 	}
 
-	static int removeAll(User u) {
+	static int removeAll(UserSec u) {
 		u == null ? 0 : UserAuthority.where { user == u }.deleteAll()
 	}
 

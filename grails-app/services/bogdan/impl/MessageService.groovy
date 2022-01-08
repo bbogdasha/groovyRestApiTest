@@ -1,6 +1,6 @@
 package bogdan.impl
 
-import bogdan.MessageService
+import bogdan.IMessageService
 import com.bogdan.Message
 import com.bogdan.Person
 import grails.transaction.Transactional
@@ -8,7 +8,7 @@ import org.grails.datastore.mapping.query.api.Criteria
 import org.grails.web.json.JSONObject
 
 @Transactional
-class MessageServiceImpl implements MessageService {
+class MessageService implements IMessageService {
 
     List<Message> list(def params) {
         def userId = params.userId

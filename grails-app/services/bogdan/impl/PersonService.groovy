@@ -1,12 +1,12 @@
 package bogdan.impl
 
-import bogdan.PersonService
+import bogdan.IPersonService
 import com.bogdan.Person
 import grails.transaction.Transactional
 import org.grails.web.json.JSONObject
 
 @Transactional
-class PersonServiceImpl implements PersonService {
+class PersonService implements IPersonService {
 
     List<Person> list() {
         return Person.findAll()

@@ -2,7 +2,7 @@ package bogdan
 
 import com.bogdan.Person
 
-interface PersonService {
+interface IPersonService {
 
     List<Person> list()
 
