@@ -1,8 +1,5 @@
 package com.bogdan
 
-import grails.rest.Resource
-
-@Resource(uri='/api/users/**/message/**')
 class Message {
     Long id
     String theme

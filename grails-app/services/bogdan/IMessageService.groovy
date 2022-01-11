@@ -1,17 +1,18 @@
 package bogdan
 
 import com.bogdan.Message
+import commands.MessageCommand
 
 interface IMessageService {
 
-    List<Message> list(def params)
+    List<Message> list(Long userId)
 
-    Message getOne(def params)
+    Message getOne(Long userId, Long id, MessageCommand cmd)
 
-    Message save(def params, def request)
+    Message save(Long userId, MessageCommand cmd)
 
-    Message update(def params, def request)
+    Message update(Long id, MessageCommand cmd)
 
-    void delete(def params)
+    void delete(Long id)
 
 }

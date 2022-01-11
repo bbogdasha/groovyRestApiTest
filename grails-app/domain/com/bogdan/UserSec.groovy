@@ -44,6 +44,8 @@ class UserSec implements Serializable {
 	}
 
 	static mapping = {
+		table "person"
+		version false
 		password column: '`password`'
 	}
 }

@@ -12,8 +12,8 @@ class BootStrap {
 
         Date date = new Date()
 
-        Person person1 = new Person(firstName: 'Carl', lastName: 'Black', email: 'black@gmail.com', age: 26)
-        Person person2 = new Person(firstName: 'Sara', lastName: 'White', email: 'white@gmail.com', age: 21)
+        Person person1 = new Person(firstName: 'Carl', lastName: 'Black', email: 'black@gmail.com', age: 26, username: "user1", password: "pwd1")
+        Person person2 = new Person(firstName: 'Sara', lastName: 'White', email: 'white@gmail.com', age: 21, username: "user2", password: "pwd2")
 
         Message message1 = new Message(theme: 'Tesla', text: 'Bla bla bla', dateCreated: date, lastUpdated: null)
         Message message2 = new Message(theme: 'Space', text: 'Bla bla bla', dateCreated: date, lastUpdated: null)
@@ -28,8 +28,10 @@ class BootStrap {
         person2.addToMessages(message5).save()
 
         Authority role1 = new Authority(authority: "ROLE_USER").save()
-        UserSec user1 = new UserSec(username: "user1", password: "pwd1").save()
-        UserAuthority.create(user1,role1)
+//        UserSec user1 = new UserSec(username: "user1", password: "pwd1").save()
+//        UserAuthority.create(user1,role1)
+        UserAuthority.create(person1,role1)
+        UserAuthority.create(person2,role1)
     }
 
     def destroy = {

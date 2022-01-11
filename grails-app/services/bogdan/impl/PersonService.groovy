@@ -1,9 +1,10 @@
 package bogdan.impl
 
 import bogdan.IPersonService
+import bogdan.converters.CommandToPerson
+import commands.PersonCommand
 import com.bogdan.Person
 import grails.transaction.Transactional
-import org.grails.web.json.JSONObject
 
 @Transactional
 class PersonService implements IPersonService {
@@ -12,31 +13,26 @@ class PersonService implements IPersonService {
         return Person.findAll()
     }
 
-    Person getOne(def params) {
-        return Person.findById(params?.id)
+    Person getOne(Long id) {
+        return Person.findById(id)
     }
 
-    Person save(def request) {
-        JSONObject personJson = request.JSON
-        Person personInstance = new Person(personJson)
+    Person save(PersonCommand cmd){
+        Person person = new Person()
+        CommandToPerson.converter(cmd, person)
 
-        personInstance = personInstance.save()
-
-        return personInstance
+        return person.save()
     }
 
-    Person update(def params, def request) {
-        def personJson = request.JSON
-        Person personInstance = Person.get(params?.id)
+    Person update(Long id, PersonCommand cmd) {
+        Person person = Person.get(id)
+        CommandToPerson.converter(cmd, person)
 
-        personInstance.properties = personJson
-        personInstance = personInstance.merge()
-
-        return personInstance
+        return person.merge()
     }
 
-    void delete(def params) {
-        Person personInstance = Person.get(params?.id)
+    void delete(Long id) {
+        Person personInstance = Person.get(id)
         personInstance.delete()
     }
 }

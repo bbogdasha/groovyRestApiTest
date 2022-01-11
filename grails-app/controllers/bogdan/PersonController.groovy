@@ -2,7 +2,9 @@ package bogdan
 
 import bogdan.impl.PersonService
 import com.bogdan.Person
+import commands.PersonCommand
 import grails.rest.RestfulController
+import mapping.PersonMapping
 import org.springframework.http.HttpStatus
 
 class PersonController extends RestfulController<Person> {
@@ -14,33 +16,32 @@ class PersonController extends RestfulController<Person> {
         super(Person)
     }
 
-    @Override
     def index() {
         List<Person> persons = personService.list()
-        respond persons
+        List<Map> result = new ArrayList<>()
+        persons.each {person ->
+            result.add(PersonMapping.getData(person))
+        }
+        respond result
     }
 
-    @Override
-    def show() {
-        Person person = personService.getOne(params)
-        respond person
+    def show(Long id) {
+        Person person = personService.getOne(id)
+        respond PersonMapping.getData(person)
     }
 
-    @Override
-    def save() {
-        Person person = personService.save(request)
-        respond person
+    def save(PersonCommand cmd) {
+        Person person = personService.save(cmd)
+        respond PersonMapping.getData(person)
     }
 
-    @Override
-    def update() {
-        Person person = personService.update(params, request)
-        respond person
+    def update(Long id, PersonCommand cmd) {
+        Person person = personService.update(id, cmd)
+        respond PersonMapping.getData(person)
     }
 
-    @Override
-    def delete() {
-        personService.delete(params)
+    def delete(Long id) {
+        personService.delete(id)
         respond status: HttpStatus.OK
     }
 }

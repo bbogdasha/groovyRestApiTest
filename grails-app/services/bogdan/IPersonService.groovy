@@ -1,17 +1,18 @@
 package bogdan
 
 import com.bogdan.Person
+import commands.PersonCommand
 
 interface IPersonService {
 
     List<Person> list()
 
-    Person getOne(def params)
+    Person getOne(Long id)
 
-    Person save(def request)
+    Person save(PersonCommand cmd)
 
-    Person update(def params, def request)
+    Person update(Long id, PersonCommand cmd)
 
-    void delete(def params)
+    void delete(Long id)
 
 }

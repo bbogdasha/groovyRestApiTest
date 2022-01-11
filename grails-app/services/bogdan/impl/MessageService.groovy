@@ -1,61 +1,52 @@
 package bogdan.impl
 
 import bogdan.IMessageService
+import bogdan.converters.CommandToMessage
 import com.bogdan.Message
 import com.bogdan.Person
+import commands.MessageCommand
 import grails.transaction.Transactional
 import org.grails.datastore.mapping.query.api.Criteria
-import org.grails.web.json.JSONObject
 
 @Transactional
 class MessageService implements IMessageService {
 
-    List<Message> list(def params) {
-        def userId = params.userId
+    List<Message> list(Long userId) {
         return Message.where { user.id == userId }.list()
     }
 
-    Message getOne(def params) {
-        def userId = params.userId
-        def messageId = params?.id
-
+    Message getOne(Long userId, Long id, MessageCommand cmd) {
         Criteria criteria = Message.createCriteria()
         Message result = criteria.get{
             and {
-                eq ('user.id', Long.parseLong(userId))
-                eq ('id', Long.parseLong(messageId))
+                eq ('user.id', userId)
+                eq ('id', id)
             }
         } as Message
 
         return result
     }
 
-    Message save(def params, def request) {
-        def userId = params.userId
+    Message save(Long userId, MessageCommand cmd) {
+        Message message = new Message()
+        CommandToMessage.converter(cmd, message)
+
         Person person = Person.get(userId)
-        JSONObject messageJson = request.JSON
-        Message messageInstance = new Message(messageJson)
+        person.addToMessages(message)
 
-        person.addToMessages(messageInstance)
-
-        return messageInstance
+        return message.save()
     }
 
-    Message update(def params, def request) {
-        def messageId = params?.id
-        def messageJson = request.JSON
-        Message messageInstance = Message.get(messageId)
+    Message update(Long id, MessageCommand cmd) {
+        Message message = Message.get(id)
+        CommandToMessage.converter(cmd, message)
+        message.lastUpdated = new Date()
 
-        messageInstance.properties = messageJson
-        messageInstance.lastUpdated = new Date()
-        messageInstance = messageInstance.merge()
-
-        return messageInstance
+        return message.merge()
     }
 
-    void delete(def params) {
-        def messageId = params?.id
-        Message messageInstance = Message.get(messageId)
+    void delete(Long id) {
+        Message messageInstance = Message.get(id)
         messageInstance.delete()
     }
 }

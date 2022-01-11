@@ -1,9 +1,6 @@
 package com.bogdan
 
-import grails.rest.Resource
-
-@Resource(uri='/api/users/**')
-class Person {
+class Person extends UserSec {
     Long   id
     String firstName
     String lastName
@@ -21,6 +18,7 @@ class Person {
     }
 
     static mapping = {
+        table "person"
         version false
     }
 }
