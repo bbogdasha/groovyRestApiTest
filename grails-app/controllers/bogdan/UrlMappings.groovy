@@ -23,8 +23,9 @@ class UrlMappings {
 
         "/api/users/$userId/messages/$id"(controller: "message", action: "delete", method:"DELETE")
 
-        "/"(view:"/index")
-        "500"(view:'/error')
-        "404"(view:'/notFound')
+//        "/"(view:"/index")
+//        "500"(view:'/error')
+//        "404"(controller: "error", action: "handleNotFoundException")
+        "500"(controller: "error")
     }
 }

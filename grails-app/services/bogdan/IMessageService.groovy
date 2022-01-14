@@ -7,12 +7,12 @@ interface IMessageService {
 
     List<Message> list(Long userId)
 
-    Message getOne(Long userId, Long id, MessageCommand cmd)
+    Message getOne(Long userId, Long id)
 
     Message save(Long userId, MessageCommand cmd)
 
-    Message update(Long id, MessageCommand cmd)
+    Message update(Long userId, Long id, MessageCommand cmd)
 
-    void delete(Long id)
+    void delete(Long userId, Long id)
 
 }
