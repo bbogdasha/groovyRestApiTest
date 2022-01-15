@@ -1,7 +1,7 @@
 package bogdan.converters
 
 import com.bogdan.Person
-import commands.PersonCommand
+import com.bogdan.commands.PersonCommand
 
 class CommandToPerson {
 

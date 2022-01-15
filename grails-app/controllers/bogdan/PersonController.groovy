@@ -1,17 +1,18 @@
 package bogdan
 
 import bogdan.impl.PersonService
-import com.bogdan.ErrorController
 import com.bogdan.Person
-import commands.PersonCommand
+import com.bogdan.commands.PersonCommand
+import com.bogdan.exception.ErrorHandler
 import grails.web.Controller
 import mapping.PersonMapping
 import org.springframework.http.HttpStatus
 
 @Controller
-class PersonController extends ErrorController {
+class PersonController implements ErrorHandler {
 
     PersonService personService
+
     static responseFormats = ['json', 'xml']
 
     def index() {
@@ -29,14 +30,8 @@ class PersonController extends ErrorController {
     }
 
     def save(PersonCommand cmd) {
-        if (cmd.validate()) {
-            Person person = personService.save(cmd)
-            respond PersonMapping.getData(person)
-        } else {
-            response.status = 400
-            respond status: 400,
-                    message: "The field $cmd.errors.fieldError.field must be filled out and comply with the rules!"
-        }
+        Person person = personService.save(cmd)
+        respond PersonMapping.getData(person)
     }
 
     def update(Long id, PersonCommand cmd) {

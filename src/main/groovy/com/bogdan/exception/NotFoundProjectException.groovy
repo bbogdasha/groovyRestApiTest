@@ -1,4 +1,4 @@
-package com.bogdan
+package com.bogdan.exception
 
 class NotFoundProjectException extends RuntimeException {
 

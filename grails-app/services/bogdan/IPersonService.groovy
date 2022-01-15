@@ -1,7 +1,7 @@
 package bogdan
 
 import com.bogdan.Person
-import commands.PersonCommand
+import com.bogdan.commands.PersonCommand
 
 interface IPersonService {
 

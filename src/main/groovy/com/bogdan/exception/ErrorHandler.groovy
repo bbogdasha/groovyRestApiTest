@@ -1,8 +1,8 @@
-package com.bogdan
+package com.bogdan.exception
 
 import org.springframework.http.HttpStatus
 
-class ErrorController {
+trait ErrorHandler {
 
     def handleNotFoundProjectException(NotFoundProjectException exception) {
         List<String> details = new ArrayList<>()

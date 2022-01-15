@@ -1,7 +1,7 @@
 package bogdan.converters
 
 import com.bogdan.Message
-import commands.MessageCommand
+import com.bogdan.commands.MessageCommand
 
 class CommandToMessage {
 

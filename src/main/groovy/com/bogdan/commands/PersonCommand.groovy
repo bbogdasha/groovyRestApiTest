@@ -1,4 +1,4 @@
-package commands
+package com.bogdan.commands
 
 import grails.validation.Validateable
 

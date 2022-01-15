@@ -1,17 +1,18 @@
 package bogdan
 
 import bogdan.impl.MessageService
-import com.bogdan.ErrorController
 import com.bogdan.Message
-import commands.MessageCommand
+import com.bogdan.commands.MessageCommand
+import com.bogdan.exception.ErrorHandler
 import grails.web.Controller
 import mapping.MessageMapping
 import org.springframework.http.HttpStatus
 
 @Controller
-class MessageController extends ErrorController {
+class MessageController implements ErrorHandler {
 
     MessageService messageService
+
     static responseFormats = ['json', 'xml']
 
     def index(Long userId) {

@@ -10,7 +10,7 @@ class Person extends UserSec {
     static hasMany = [messages: Message]
 
     static constraints = {
-        email email: true, blank: false, unique: true
+        email email: true, blank: false, unique: true, nullable: false
         firstName blank: false, nullable: false
         lastName blank: false, nullable: false
         age nullable: true
