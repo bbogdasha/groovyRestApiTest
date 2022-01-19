@@ -98,5 +98,11 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
             url: jdbc:postgresql://localhost:5432/postgres
+
+---
+grails:
+    plugin:
+        databasemigration:
+            updateOnStart: true
+            updateOnStartFileName: master.xml

@@ -17,5 +17,6 @@ class Authority implements Serializable {
 
 	static mapping = {
 		cache true
+		version false
 	}
 }

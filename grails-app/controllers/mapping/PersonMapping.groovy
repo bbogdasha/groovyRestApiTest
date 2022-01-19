@@ -11,6 +11,7 @@ class PersonMapping {
         result.lastName = person.lastName
         result.email = person.email
         result.age = person.age
+        result.roles = person.authorities.authority
 
         return result
     }
