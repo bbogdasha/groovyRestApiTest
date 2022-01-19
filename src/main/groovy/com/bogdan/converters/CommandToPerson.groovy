@@ -1,4 +1,4 @@
-package bogdan.converters
+package com.bogdan.converters
 
 import com.bogdan.Person
 import com.bogdan.commands.PersonCommand

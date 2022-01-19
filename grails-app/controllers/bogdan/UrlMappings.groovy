@@ -9,6 +9,7 @@ class UrlMappings {
         "/api/users/$id"(controller: "person", action: "show", method:"GET")
 
         "/api/users"(controller: "person", action: "save", method:"POST")
+//        "/api/register"(controller: "register", action: "register", method:"POST")
         "/api/users/$id"(controller: "person", action: "update", method:"PUT")
 
         "/api/users/$id"(controller: "person", action: "delete", method:"DELETE")
@@ -23,9 +24,6 @@ class UrlMappings {
 
         "/api/users/$userId/messages/$id"(controller: "message", action: "delete", method:"DELETE")
 
-//        "/"(view:"/index")
-//        "500"(view:'/error')
-//        "404"(controller: "error", action: "handleNotFoundException")
         "500"(controller: "error")
     }
 }

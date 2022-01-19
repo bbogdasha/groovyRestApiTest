@@ -1,13 +1,17 @@
 package bogdan.impl
 
 import bogdan.IPersonService
-import bogdan.converters.CommandToPerson
+import com.bogdan.Authority
+import com.bogdan.UserAuthority
+import com.bogdan.converters.CommandToPerson
 import com.bogdan.exception.BadRequestProjectException
 import com.bogdan.exception.NotFoundProjectException
 import com.bogdan.commands.PersonCommand
 import com.bogdan.Person
 import grails.transaction.Transactional
+import org.springframework.stereotype.Service
 
+@Service
 @Transactional
 class PersonService implements IPersonService {
 
@@ -41,6 +45,10 @@ class PersonService implements IPersonService {
         if (cmd.validate()) {
             Person person = new Person()
             CommandToPerson.converter(cmd, person)
+
+//            Authority role = Authority.findByAuthority("ROLE_USER")
+//            UserAuthority.create(person, role)
+
             return person.save()
         } else {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, cmd.errors.fieldError.field))

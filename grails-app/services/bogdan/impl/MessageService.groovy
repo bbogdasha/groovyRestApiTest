@@ -1,14 +1,16 @@
 package bogdan.impl
 
 import bogdan.IMessageService
-import bogdan.converters.CommandToMessage
+import com.bogdan.converters.CommandToMessage
 import com.bogdan.exception.BadRequestProjectException
 import com.bogdan.Message
 import com.bogdan.exception.NotFoundProjectException
 import com.bogdan.Person
 import com.bogdan.commands.MessageCommand
 import grails.transaction.Transactional
+import org.springframework.stereotype.Service
 
+@Service
 @Transactional
 class MessageService implements IMessageService {
 

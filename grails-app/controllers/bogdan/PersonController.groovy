@@ -5,7 +5,7 @@ import com.bogdan.Person
 import com.bogdan.commands.PersonCommand
 import com.bogdan.exception.ErrorHandler
 import grails.web.Controller
-import mapping.PersonMapping
+import com.bogdan.mapping.PersonMapping
 import org.springframework.http.HttpStatus
 
 @Controller

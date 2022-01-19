@@ -1,4 +1,4 @@
-package mapping
+package com.bogdan.mapping
 
 import com.bogdan.Person
 

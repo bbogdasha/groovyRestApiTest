@@ -5,7 +5,7 @@ import com.bogdan.Message
 import com.bogdan.commands.MessageCommand
 import com.bogdan.exception.ErrorHandler
 import grails.web.Controller
-import mapping.MessageMapping
+import com.bogdan.mapping.MessageMapping
 import org.springframework.http.HttpStatus
 
 @Controller
