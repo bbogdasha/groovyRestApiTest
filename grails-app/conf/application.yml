@@ -89,17 +89,17 @@ hibernate:
         provider_class: org.hibernate.cache.EhCacheProvider
 
 dataSource:
+    dialect: org.hibernate.dialect.SQLServer2012Dialect
     pooled: true
     jmxExport: true
-    driverClassName: org.postgresql.Driver
-    username: postgres
-    password: 485121
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: Application
+    password: bo4851211gd#!
 
 environments:
     development:
         dataSource:
-            url: jdbc:postgresql://localhost:5432/postgres
-
+            url: jdbc:sqlserver://localhost;database=Project
 ---
 grails:
     plugin:

@@ -5,12 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <property name="now" value="now()" dbms="postgresql"/>
-
     <changeSet author="bogdan" id="Project-3.1">
         <insert tableName="person"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="first_name" value="Bob"/>
             <column name="last_name" value="White"/>
             <column name="email" value="white@gmail.com"/>
@@ -27,8 +25,8 @@
 
     <changeSet author="bogdan" id="Project-3.2">
         <insert tableName="user_authority"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="user_id" value="2"/>
             <column name="authority_id" value="2"/>
         </insert>
@@ -36,11 +34,11 @@
 
     <changeSet author="bogdan" id="Project-3.3">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="News"/>
             <column name="text" value="Super news today!"/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="2"/>
         </insert>
@@ -48,11 +46,11 @@
 
     <changeSet author="bogdan" id="Project-3.4">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="UFO"/>
             <column name="text" value="Flying saucer"/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="2"/>
         </insert>
@@ -60,8 +58,8 @@
 
     <changeSet author="bogdan" id="Project-3.5">
         <insert tableName="person"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="first_name" value="Ketty"/>
             <column name="last_name" value="Red"/>
             <column name="email" value="red@gmail.com"/>
@@ -78,8 +76,8 @@
 
     <changeSet author="bogdan" id="Project-3.6">
         <insert tableName="user_authority"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="user_id" value="3"/>
             <column name="authority_id" value="2"/>
         </insert>
@@ -87,11 +85,11 @@
 
     <changeSet author="bogdan" id="Project-3.7">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="Apple presentation"/>
             <column name="text" value="OMG! Nothing new..."/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="3"/>
         </insert>
@@ -99,11 +97,11 @@
 
     <changeSet author="bogdan" id="Project-3.8">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="Movies"/>
             <column name="text" value="Recently I saw cool film!"/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="3"/>
         </insert>

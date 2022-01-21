@@ -5,12 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <property name="now" value="now()" dbms="postgresql"/>
-
     <changeSet author="bogdan" id="Project-2.1">
         <insert tableName="person"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="first_name" value="Carl"/>
             <column name="last_name" value="Black"/>
             <column name="email" value="black@gmail.com"/>
@@ -27,24 +25,24 @@
 
     <changeSet author="bogdan" id="Project-2.2">
         <insert tableName="authority"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="authority" value="ROLE_ADMIN"/>
         </insert>
     </changeSet>
 
     <changeSet author="bogdan" id="Project-2.3">
         <insert tableName="authority"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="authority" value="ROLE_USER"/>
         </insert>
     </changeSet>
 
     <changeSet author="bogdan" id="Project-2.4">
         <insert tableName="user_authority"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="user_id" value="1"/>
             <column name="authority_id" value="1"/>
         </insert>
@@ -52,8 +50,8 @@
 
     <changeSet author="bogdan" id="Project-2.5">
         <insert tableName="user_authority"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="user_id" value="1"/>
             <column name="authority_id" value="2"/>
         </insert>
@@ -61,11 +59,11 @@
 
     <changeSet author="bogdan" id="Project-2.6">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="New Year"/>
             <column name="text" value="Happy New Year and bla bla bla!"/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="1"/>
         </insert>
@@ -73,11 +71,11 @@
 
     <changeSet author="bogdan" id="Project-2.7">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="Tesla"/>
             <column name="text" value="Tesla is fantastic car!"/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="1"/>
         </insert>
@@ -85,11 +83,11 @@
 
     <changeSet author="bogdan" id="Project-2.8">
         <insert tableName="message"
-                schemaName="public"
-                dbms="postgresql">
+                schemaName="dbo"
+                dbms="mssql">
             <column name="theme" value="Space"/>
             <column name="text" value="Recently NASA launched James Webb in space"/>
-            <column name="date_created" valueDate="${now}"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
             <column name="last_updated" valueDate="null"/>
             <column name="user_id" value="1"/>
         </insert>
