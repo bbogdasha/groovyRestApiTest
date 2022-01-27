@@ -8,8 +8,7 @@ class UrlMappings {
         "/api/users"(controller: "person", action: "index", method:"GET")
         "/api/users/$id"(controller: "person", action: "show", method:"GET")
 
-        "/api/users"(controller: "person", action: "save", method:"POST")
-//        "/api/register"(controller: "register", action: "register", method:"POST")
+        "/api/register"(controller: "register", action: "register", method:"POST")
         "/api/users/$id"(controller: "person", action: "update", method:"PUT")
 
         "/api/users/$id"(controller: "person", action: "delete", method:"DELETE")

@@ -19,6 +19,8 @@ class PersonService implements IPersonService {
 
     private static final String BAD_REQUEST = "The field: %s - must be filled out and comply with the rules."
 
+    private static final String BAD_REQUEST_EXIST_PERSON = "Person with email: %s - already exists."
+
     @Transactional(readOnly = true)
     List<Person> list() {
         return Person.findAll()
@@ -41,21 +43,34 @@ class PersonService implements IPersonService {
         }
     }
 
+    @Transactional(readOnly = true)
+    void checkExistEmail(String email) {
+        Person exist = Person.findByEmail(email)
+        if (exist != null) {
+            throw new BadRequestProjectException(String.format(BAD_REQUEST_EXIST_PERSON, email))
+        }
+    }
+
     Person save(PersonCommand cmd){
+        checkExistEmail(cmd.email)
         if (cmd.validate()) {
             Person person = new Person()
             CommandToPerson.converter(cmd, person)
+            person.save()
 
-//            Authority role = Authority.findByAuthority("ROLE_USER")
-//            UserAuthority.create(person, role)
+            Authority role = Authority.findByAuthority("ROLE_USER")
+            UserAuthority.create(person, role)
 
-            return person.save()
+            return person
         } else {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, cmd.errors.fieldError.field))
         }
     }
 
     Person update(Long id, PersonCommand cmd) {
+        if (getOne(id).email != cmd.email) {
+            checkExistEmail(cmd.email)
+        }
         if (cmd.validate()) {
             Person person = getOne(id)
             CommandToPerson.converter(cmd, person)

@@ -4,8 +4,8 @@ import bogdan.impl.PersonService
 import com.bogdan.Person
 import com.bogdan.commands.PersonCommand
 import com.bogdan.exception.ErrorHandler
-import grails.web.Controller
 import com.bogdan.mapping.PersonMapping
+import grails.web.Controller
 import org.springframework.http.HttpStatus
 
 @Controller
@@ -26,11 +26,6 @@ class PersonController implements ErrorHandler {
 
     def show(Long id) {
         Person person = personService.getOne(id)
-        respond PersonMapping.getData(person)
-    }
-
-    def save(PersonCommand cmd) {
-        Person person = personService.save(cmd)
         respond PersonMapping.getData(person)
     }
 
