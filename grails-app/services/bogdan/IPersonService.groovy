@@ -9,6 +9,10 @@ interface IPersonService {
 
     Person getOne(Long id)
 
+    void checkExist(Long id)
+
+    void checkExistEmail(String email)
+
     Person save(PersonCommand cmd)
 
     Person update(Long id, PersonCommand cmd)

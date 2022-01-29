@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="bogdan" id="Project-1.12">
+        <createTable tableName="follower">
+            <column name="person_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="followerPK"/>
+            </column>
+            <column name="follower_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="followerPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="bogdan" id="Project-1.13">
+        <addForeignKeyConstraint baseColumnNames="follower_id"
+                                 baseTableName="follower"
+                                 constraintName="FK_FOLLOWERID_PERSON"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"
+                                 validate="true"/>
+    </changeSet>
+
+    <changeSet author="bogdan" id="Project-1.14">
+        <addForeignKeyConstraint baseColumnNames="person_id"
+                                 baseTableName="follower"
+                                 constraintName="FK_PERSONID_PERSON"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"
+                                 validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

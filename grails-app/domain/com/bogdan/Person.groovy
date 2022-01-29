@@ -7,7 +7,12 @@ class Person extends UserSec {
     String email
     int age
 
-    static hasMany = [messages: Message]
+    static hasMany = [messages: Message,
+                      person: Follower,
+                      follower: Follower]
+
+    static mappedBy = [person: 'person',
+                       follower: 'follower']
 
     static constraints = {
         email email: true, blank: false, unique: true, nullable: false
