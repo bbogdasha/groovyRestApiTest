@@ -21,10 +21,10 @@ class UrlMappings {
 
 
         // Controller follower
-        "/api/users/$userId/followers"(controller: "follower", action: "index", method:"GET")
-        "/api/users/$userId/followers/$followerId"(controller: "follower", action: "show", method:"GET")
-        "/api/users/$followerId/follow/$userId"(controller: "follower", action: "save", method:"POST")
-        "/api/users/$followerId/followers/$userId"(controller: "follower", action: "delete", method:"DELETE")
+        "/api/users/$userId/followers"(controller: "relation", action: "index", method:"GET")
+        "/api/users/$userId/followers/$followerId"(controller: "relation", action: "show", method:"GET")
+        "/api/users/$followerId/follow/$userId"(controller: "relation", action: "save", method:"POST")
+        "/api/users/$followerId/unfollow/$userId"(controller: "relation", action: "delete", method:"DELETE")
 
         "500"(controller: "error")
     }

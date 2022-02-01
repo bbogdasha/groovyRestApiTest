@@ -8,11 +8,7 @@ class Person extends UserSec {
     int age
 
     static hasMany = [messages: Message,
-                      person: Follower,
-                      follower: Follower]
-
-    static mappedBy = [person: 'person',
-                       follower: 'follower']
+                      follower: Person]
 
     static constraints = {
         email email: true, blank: false, unique: true, nullable: false
@@ -25,5 +21,6 @@ class Person extends UserSec {
     static mapping = {
         table "person"
         version false
+        follower joinTable: [ name: 'person_relation', column: 'person_id', key: 'relation_person_id']
     }
 }
