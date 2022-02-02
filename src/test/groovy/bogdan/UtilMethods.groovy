@@ -1,5 +1,6 @@
 package bogdan
 
+import com.bogdan.Message
 import com.bogdan.Person
 import com.bogdan.commands.PersonCommand
 
@@ -30,7 +31,7 @@ class UtilMethods {
 
     static List<Person> getListPerson() {
         List<Person> list = new ArrayList<>()
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             Person person = person
             person.email = "newEmail$i@gmail.com"
             list.add(person)
@@ -72,5 +73,14 @@ class UtilMethods {
         PersonCommand cmd = personCommand
         cmd.email = ""
         cmd
+    }
+
+    static Message getMessage() {
+        Message message = new Message()
+        message.id = 1
+        message.theme = "Some Theme"
+        message.text = "Some text"
+        message.user = person
+        message
     }
 }

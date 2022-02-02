@@ -21,7 +21,7 @@ class RelationService implements IRelationService {
 
     List<Person> myFollowers(Long personId) {
         Person person = personService.getOne(personId)
-        return person.follower.toList()
+        return person.subscribedTo.toList()
     }
 
     Person existFollower(Long followerId, Long userId) {
@@ -48,7 +48,7 @@ class RelationService implements IRelationService {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, "follow"))
         }
 
-        person.addToFollower(follower)
+        person.addToSubscribedTo(follower)
         person.save()
 
         return [person: follower, follower: person]
@@ -66,7 +66,7 @@ class RelationService implements IRelationService {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, "unfollow"))
         }
 
-        person.removeFromFollower(follower)
+        person.removeFromSubscribedTo(follower)
         person.save()
 
         return [person: follower, follower: person]

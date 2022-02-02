@@ -40,9 +40,6 @@ class PersonServiceSpec extends Specification {
             email == person.email
             age == person.age
         }
-
-        cleanup:
-        service.delete(result.id)
     }
 
     void "Test getOne service method of not exists person"() {
@@ -68,9 +65,6 @@ class PersonServiceSpec extends Specification {
             email == person.email
             age == person.age
         }
-
-        cleanup:
-        service.delete(result.id)
     }
 
     void "Test save service method of exists person"() {
@@ -84,9 +78,6 @@ class PersonServiceSpec extends Specification {
         Exception exception = thrown(BadRequestProjectException)
         exception.message == String.format(BAD_REQUEST_EXIST_PERSON, person.email)
         result == null
-
-        cleanup:
-        service.delete(person.id)
     }
 
     @Unroll
@@ -123,7 +114,7 @@ class PersonServiceSpec extends Specification {
 
     void "Test list service method of persons"() {
         given:
-        List<Person> list = getListPerson()
+        List<Person> list = util.getListPerson()
         service.save(util.personCommand)
 
         when:
@@ -132,9 +123,6 @@ class PersonServiceSpec extends Specification {
         then:
         result.size() == list.size()
         result.get(0) == list.get(0)
-
-        cleanup:
-        list.each {person -> service.delete(person.id)}
     }
 
     void "Test update service method of valid person"() {
@@ -154,9 +142,6 @@ class PersonServiceSpec extends Specification {
             email == person.email
             age == person.age
         }
-
-        cleanup:
-        service.delete(result.id)
     }
 
     void "Test update service method of not exists person"() {
@@ -186,9 +171,6 @@ class PersonServiceSpec extends Specification {
         Exception exception = thrown(BadRequestProjectException)
         exception.message == String.format(BAD_REQUEST, newPersonCommand.errors.fieldError.field)
 
-        cleanup:
-        service.delete(person.id)
-
         where:
         cmdParam                        |   result                                  |   testCase
         util.personCommandWithoutFirstName   |   String.format(BAD_REQUEST, "firstName") |   'person without first name'
@@ -217,15 +199,5 @@ class PersonServiceSpec extends Specification {
         then:
         Exception exception = thrown(NotFoundProjectException)
         exception.message == String.format(PERSON_NOT_FOUND, 1)
-    }
-
-    private List<Person> getListPerson() {
-        List<Person> list = new ArrayList<>()
-        for (int i = 0; i < 1; i++) {
-            Person person = util.person
-            person.email = "newEmail$i@gmail.com"
-            list.add(person)
-        }
-        list
     }
 }

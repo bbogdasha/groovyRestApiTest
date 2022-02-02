@@ -11,7 +11,7 @@ interface IPersonService {
 
     void checkExist(Long id)
 
-    void checkExistEmail(String email)
+    void checkExistEmailAndUsername(PersonCommand cmd)
 
     Person save(PersonCommand cmd)
 

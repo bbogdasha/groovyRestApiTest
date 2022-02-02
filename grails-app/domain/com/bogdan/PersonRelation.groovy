@@ -3,7 +3,7 @@ package com.bogdan
 class PersonRelation implements Serializable {
 
     Person person
-    Person follower
+    Person subscribedTo
 
     static constraints = {
 
@@ -11,6 +11,6 @@ class PersonRelation implements Serializable {
 
     static mapping = {
         version false
-        id composite: ['person', 'follower']
+        id composite: ['person', 'subscribedTo']
     }
 }

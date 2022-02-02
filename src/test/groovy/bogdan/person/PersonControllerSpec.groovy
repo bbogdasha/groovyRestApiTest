@@ -97,7 +97,7 @@ class PersonControllerSpec extends Specification {
 
     void 'Test index controller method for get list persons'() {
         given:
-        List<Person> list = getListPerson()
+        List<Person> list = util.getListPerson()
 
         and:
         controller.personService = Mock(PersonService)
@@ -201,16 +201,6 @@ class PersonControllerSpec extends Specification {
         util.personCommandBlankFirstName   | getBadRequestResponse("firstName") | 'person with empty first name'
         util.personCommandBlankLastName    | getBadRequestResponse("lastName")  | 'person with empty last name'
         util.personCommandBlankEmail       | getBadRequestResponse("email")     | 'person with empty email'
-    }
-
-    private List<Person> getListPerson() {
-        List<Person> list = new ArrayList<>()
-        for (int i = 0; i < 3; i++) {
-            Person person = util.person
-            person.email = "newEmail$i@gmail.com"
-            list.add(person)
-        }
-        list
     }
 
     private Map getBadRequestResponse(String field) {
