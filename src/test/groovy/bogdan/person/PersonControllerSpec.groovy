@@ -8,17 +8,14 @@ import com.bogdan.UserAuthority
 import com.bogdan.commands.PersonCommand
 import com.bogdan.exception.BadRequestProjectException
 import com.bogdan.exception.NotFoundProjectException
-import com.bogdan.mapping.PersonMapping
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 import spock.lang.Unroll
 
 @TestFor(PersonController)
-@Mock([UserAuthority])
+@Mock(UserAuthority)
 class PersonControllerSpec extends Specification {
-
-    private static UtilMethods util = new UtilMethods()
 
     private static final String PERSON_NOT_FOUND = "Person with id: %d is not found."
 
@@ -34,7 +31,7 @@ class PersonControllerSpec extends Specification {
 
     void 'Test show controller method of valid person'() {
         given:
-        Person person = util.person
+        Person person = UtilMethods.person
 
         and:
         controller.personService = Mock(PersonService)
@@ -45,7 +42,12 @@ class PersonControllerSpec extends Specification {
         then:
         response.status == 200
         1 * controller.personService.getOne(1) >> person
-        PersonMapping.getData(person) == response.json
+        [id : 1,
+        firstName : "Carl",
+        lastName : "Black",
+        email : "black@gmail.com",
+        age : 26,
+        roles : []] == response.json
     }
 
     void 'Test show controller method of not exists person'() {
@@ -97,7 +99,7 @@ class PersonControllerSpec extends Specification {
 
     void 'Test index controller method for get list persons'() {
         given:
-        List<Person> list = util.getListPerson()
+        List<Person> list = UtilMethods.getListPerson()
 
         and:
         controller.personService = Mock(PersonService)
@@ -110,15 +112,20 @@ class PersonControllerSpec extends Specification {
         1 * controller.personService.list() >> list
         List<Map> result = new ArrayList<>()
         list.each {p ->
-            result.add(PersonMapping.getData(p))
+            result.add([id : 1,
+                        firstName : "Carl",
+                        lastName : "Black",
+                        email : "newEmail0@gmail.com",
+                        age : 26,
+                        roles : []])
         }
         response.json == result
     }
 
     void 'Test update controller method of valid person'() {
         given:
-        Person oldPerson = util.person
-        PersonCommand cmd = util.personCommand
+        Person oldPerson = UtilMethods.person
+        PersonCommand cmd = UtilMethods.personCommand
 
         Person newPerson = oldPerson
         newPerson.email = "updated@gmail.com"
@@ -132,12 +139,17 @@ class PersonControllerSpec extends Specification {
         then:
         response.status == 200
         1 * controller.personService.update(1, cmd) >> newPerson
-        PersonMapping.getData(newPerson) == response.json
+        [id : 1,
+         firstName : "Carl",
+         lastName : "Black",
+         email : "updated@gmail.com",
+         age : 26,
+         roles : []] == response.json
     }
 
     void 'Test update controller method of not exists person'() {
         given:
-        PersonCommand cmd = util.personCommand
+        PersonCommand cmd = UtilMethods.personCommand
 
         and:
         controller.personService = Mock(PersonService)
@@ -154,7 +166,7 @@ class PersonControllerSpec extends Specification {
 
     void 'Test update controller method of exists person by email'() {
         given:
-        PersonCommand cmd = util.personCommand
+        PersonCommand cmd = UtilMethods.personCommand
 
         Map data = [
                 status: 400,
@@ -195,12 +207,12 @@ class PersonControllerSpec extends Specification {
 
         where:
         cmdParam                           | result                                  | testCase
-        util.personCommandWithoutFirstName | getBadRequestResponse("firstName") | 'person without first name'
-        util.personCommandWithoutLastName  | getBadRequestResponse("lastName")  | 'person without last name'
-        util.personCommandWithoutEmail     | getBadRequestResponse("email")     | 'person without email'
-        util.personCommandBlankFirstName   | getBadRequestResponse("firstName") | 'person with empty first name'
-        util.personCommandBlankLastName    | getBadRequestResponse("lastName")  | 'person with empty last name'
-        util.personCommandBlankEmail       | getBadRequestResponse("email")     | 'person with empty email'
+        UtilMethods.personCommandWithoutFirstName | getBadRequestResponse("firstName") | 'person without first name'
+        UtilMethods.personCommandWithoutLastName  | getBadRequestResponse("lastName")  | 'person without last name'
+        UtilMethods.personCommandWithoutEmail     | getBadRequestResponse("email")     | 'person without email'
+        UtilMethods.personCommandBlankFirstName   | getBadRequestResponse("firstName") | 'person with empty first name'
+        UtilMethods.personCommandBlankLastName    | getBadRequestResponse("lastName")  | 'person with empty last name'
+        UtilMethods.personCommandBlankEmail       | getBadRequestResponse("email")     | 'person with empty email'
     }
 
     private Map getBadRequestResponse(String field) {

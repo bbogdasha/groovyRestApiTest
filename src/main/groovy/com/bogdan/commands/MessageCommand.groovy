@@ -8,7 +8,7 @@ class MessageCommand implements Validateable {
     String text
 
     static constraints = {
-        theme blank: false, nullable: false
-        text blank: false, nullable: false
+        theme blank: false, nullable: false, size: 3..30
+        text blank: false, nullable: false, size: 3..255
     }
 }

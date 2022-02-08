@@ -12,11 +12,11 @@ class PersonCommand implements Validateable {
     int age
 
     static constraints = {
-        firstName blank: false, nullable: false
-        lastName blank: false, nullable: false
-        email email: true, blank: false, unique: true
-        age nullable: true
+        firstName blank: false, nullable: false, size: 2..30
+        lastName blank: false, nullable: false, size: 2..30
+        email email: true, blank: false, unique: true, size: 5..30
+        age nullable: true, range: 10..120
         password blank: false, password: true
-        username blank: false, unique: true
+        username blank: false, unique: true, size: 5..30
     }
 }

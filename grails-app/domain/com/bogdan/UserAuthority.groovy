@@ -37,7 +37,7 @@ class UserAuthority implements Serializable {
 	}
 
 	private static DetachedCriteria criteriaFor(long userId, long authorityId) {
-		UserAuthority.where {
+		where {
 			user == UserSec.load(userId) &&
 			authority == Authority.load(authorityId)
 		}
@@ -51,23 +51,23 @@ class UserAuthority implements Serializable {
 
 	static boolean remove(UserSec u, Authority r) {
 		if (u != null && r != null) {
-			UserAuthority.where { user == u && authority == r }.deleteAll()
+			where { user == u && authority == r }.deleteAll()
 		}
 	}
 
 	static int removeAll(UserSec u) {
-		u == null ? 0 : UserAuthority.where { user == u }.deleteAll()
+		u == null ? 0 : where { user == u }.deleteAll()
 	}
 
 	static int removeAll(Authority r) {
-		r == null ? 0 : UserAuthority.where { authority == r }.deleteAll()
+		r == null ? 0 : where { authority == r }.deleteAll()
 	}
 
 	static constraints = {
 		authority validator: { Authority r, UserAuthority ur ->
 			if (ur.user?.id) {
-				UserAuthority.withNewSession {
-					if (UserAuthority.exists(ur.user.id, r.id)) {
+				withNewSession {
+					if (exists(ur.user.id, r.id)) {
 						return ['userRole.exists']
 					}
 				}

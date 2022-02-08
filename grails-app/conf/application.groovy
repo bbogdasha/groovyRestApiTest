@@ -1,10 +1,8 @@
-import grails.plugin.springsecurity.SecurityConfigType
-
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.bogdan.UserSec'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.bogdan.UserAuthority'
 grails.plugin.springsecurity.authority.className = 'com.bogdan.Authority'
-grails.plugin.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
+grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.interceptUrlMap = [
 	[pattern: '/',               	access: ['permitAll']],
 	[pattern: '/error',          	access: ['permitAll']],
@@ -18,9 +16,6 @@ grails.plugin.springsecurity.interceptUrlMap = [
 	[pattern: '/**/favicon.ico', 	access: ['permitAll']],
 	[pattern: '/api/login',			access: ['permitAll']],
 	[pattern: '/api/register', 	 	access: ['permitAll']],
-	[pattern: '/api/users', 	   	access: ['permitAll']],
-	[pattern: '/api/users/**', 	   	access: ['permitAll'], httpMethod: 'GET'],
-	[pattern: '/**/messages',		access: ['permitAll'], httpMethod: 'GET'],
 	[pattern: '/api/logout', 	   	access: ['isFullyAuthenticated()']],
 	[pattern: '/**/messages/**',	access: ['isFullyAuthenticated()']],
 	[pattern: '/api/users/**',    	access: ['isFullyAuthenticated()']],

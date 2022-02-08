@@ -2,6 +2,7 @@ package bogdan.impl
 
 import bogdan.IPersonService
 import com.bogdan.Authority
+import com.bogdan.PersonRelation
 import com.bogdan.UserAuthority
 import com.bogdan.converters.CommandToPerson
 import com.bogdan.exception.BadRequestProjectException
@@ -25,22 +26,22 @@ class PersonService implements IPersonService {
 
     @Transactional(readOnly = true)
     List<Person> list() {
-        return Person.findAll()
+        Person.findAll()
     }
 
     @Transactional(readOnly = true)
     Person getOne(Long id) {
         Person person = Person.findById(id)
-        if (person == null) {
+        if (!person) {
             throw new NotFoundProjectException(String.format(PERSON_NOT_FOUND, id))
         }
-        return person
+        person
     }
 
     @Transactional(readOnly = true)
     void checkExist(Long id) {
         int exist = Person.countById(id)
-        if (exist == 0) {
+        if (!exist) {
             throw new NotFoundProjectException(String.format(PERSON_NOT_FOUND, id))
         }
     }
@@ -49,10 +50,10 @@ class PersonService implements IPersonService {
     void checkExistEmailAndUsername(PersonCommand cmd) {
         Person existEmail = Person.findByEmail(cmd.email)
         Person existUsername = Person.findByUsername(cmd.username)
-        if (existEmail != null) {
+        if (existEmail) {
             throw new BadRequestProjectException(String.format(BAD_REQUEST_EMAIL, cmd.email))
         }
-        if (existUsername != null) {
+        if (existUsername) {
             throw new BadRequestProjectException(String.format(BAD_REQUEST_USERNAME, cmd.username))
         }
     }
@@ -67,7 +68,7 @@ class PersonService implements IPersonService {
             Authority role = Authority.findByAuthority("ROLE_USER")
             UserAuthority.create(person, role)
 
-            return person
+            person
         } else {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, cmd.errors.fieldError.field))
         }
@@ -87,7 +88,11 @@ class PersonService implements IPersonService {
     }
 
     void delete(Long id) {
-        Person person = getOne(id)
-        person.delete()
+        Person p = getOne(id)
+        UserAuthority.where {user == p}.deleteAll()
+        PersonRelation.where {person == p}.deleteAll()
+        p.delete()
     }
+
+
 }

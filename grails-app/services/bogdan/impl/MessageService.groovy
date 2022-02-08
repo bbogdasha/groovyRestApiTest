@@ -8,6 +8,7 @@ import com.bogdan.exception.NotFoundProjectException
 import com.bogdan.Person
 import com.bogdan.commands.MessageCommand
 import grails.transaction.Transactional
+import org.hibernate.criterion.CriteriaSpecification
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,20 +21,21 @@ class MessageService implements IMessageService {
 
     PersonService personService
 
+    RelationService relationService
+
     @Transactional(readOnly = true)
     List<Message> list(Long userId) {
         personService.checkExist(userId)
-        return Message.where { user.id == userId }.list()
+        Message.where { user.id == userId }.list()
     }
 
     @Transactional(readOnly = true)
     Message getOne(Long userId, Long id) {
-        List<Message> messages = list(userId)
-        Message message = messages.stream().filter({it.id == id}).findAny().orElse(null)
-        if (message == null) {
+        Message message = list(userId).find {it.id == id}
+        if (!message) {
             throw new NotFoundProjectException(String.format(MESSAGE_NOT_FOUND, id))
         }
-        return message
+        message
     }
 
     Message save(Long userId, MessageCommand cmd) {
@@ -44,7 +46,7 @@ class MessageService implements IMessageService {
             Person person = personService.getOne(userId)
             person.addToMessages(message)
 
-            return message.save()
+            message.save()
         } else {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, cmd.errors.fieldError.field))
         }
@@ -56,7 +58,7 @@ class MessageService implements IMessageService {
             CommandToMessage.converter(cmd, message)
             message.lastUpdated = new Date()
 
-            return message.merge()
+            message.merge()
         } else {
             throw new BadRequestProjectException(String.format(BAD_REQUEST, cmd.errors.fieldError.field))
         }
@@ -65,5 +67,39 @@ class MessageService implements IMessageService {
     void delete(Long userId, Long id) {
         Message message = getOne(userId, id)
         message.delete()
+    }
+
+    List<Message> getFeed(Long userId) {
+        List<Message> result = list(userId)
+        relationService.iFollow(userId).collect {result.addAll(it.messages)}
+        result.sort {it.dateCreated}
+    }
+
+    List<Map> countMessages() {
+        Message.createCriteria().list {
+            join "user"
+            createAlias 'user', 'usr'
+            projections {
+                count('id')
+                groupProperty('user.id')
+                groupProperty('usr.firstName')
+                groupProperty('usr.email')
+            }
+        } as List<Map>
+    }
+
+    Map countMessagesPerUser(Long id) {
+        Person.createCriteria().get {
+            resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
+            eq("id", id)
+            join "messages"
+            createAlias 'messages', 'msg'
+            projections {
+                count('msg.id', 'messages')
+                groupProperty('id', 'id')
+                groupProperty('firstName', 'firstName')
+                groupProperty('email', 'email')
+            }
+        } as Map
     }
 }

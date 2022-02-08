@@ -6,6 +6,8 @@ interface IRelationService {
 
     List<Person> myFollowers(Long personId)
 
+    List<Person> iFollow(Long personId)
+
     Person getFollower(Long personId, Long followerId)
 
     Map<String, Person> follow(Long followerId, Long personId)

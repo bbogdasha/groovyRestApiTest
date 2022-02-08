@@ -2,6 +2,7 @@ package bogdan.impl
 
 import bogdan.IRelationService
 import com.bogdan.Person
+import com.bogdan.PersonRelation
 import com.bogdan.exception.BadRequestProjectException
 import com.bogdan.exception.NotFoundProjectException
 import grails.transaction.Transactional
@@ -21,7 +22,13 @@ class RelationService implements IRelationService {
 
     List<Person> myFollowers(Long personId) {
         Person person = personService.getOne(personId)
-        return person.subscribedTo.toList()
+        person.subscribedTo.toList()
+    }
+
+    List<Person> iFollow(Long personId) {
+        Person person = personService.getOne(personId)
+        List<PersonRelation> list = PersonRelation.findAllByPerson(person)
+        list.collect {it.subscribedTo}
     }
 
     Person existFollower(Long followerId, Long userId) {
@@ -30,10 +37,10 @@ class RelationService implements IRelationService {
 
     Person getFollower(Long personId, Long followerId) {
         Person follower = existFollower(followerId, personId)
-        if (follower == null) {
+        if (!follower) {
             throw new NotFoundProjectException(String.format(FOLLOWER_NOT_FOUND, followerId))
         }
-        return follower
+        follower
     }
 
     Map<String, Person> follow(Long followerId, Long personId) {
@@ -51,7 +58,7 @@ class RelationService implements IRelationService {
         person.addToSubscribedTo(follower)
         person.save()
 
-        return [person: follower, follower: person]
+        [person: follower, follower: person]
     }
 
     Map<String, Person> unfollow(Long followerId, Long personId) {
@@ -69,6 +76,6 @@ class RelationService implements IRelationService {
         person.removeFromSubscribedTo(follower)
         person.save()
 
-        return [person: follower, follower: person]
+        [person: follower, follower: person]
     }
 }

@@ -10,8 +10,8 @@ class Message {
     static belongsTo = [user: Person]
 
     static constraints = {
-        theme blank: false, nullable: false
-        text blank: false, nullable: false
+        theme blank: false, nullable: false, size: 3..30
+        text blank: false, nullable: false, size: 3..255
         dateCreated nullable: false
         lastUpdated nullable: true
     }
